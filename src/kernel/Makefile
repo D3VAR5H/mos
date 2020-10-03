@@ -6,9 +6,9 @@ HEADERS = $(wildcard *.h ../libraries/shared/*.h utils/*.h memory/*.h cpu/*.h de
 # Nice syntax for file extension replacement
 OBJ = ${C_SOURCES:.c=.o boot.o cpu/interrupt.o cpu/descriptor.o proc/scheduler.o proc/user.o}
 
-CC = /usr/local/bin/i386-elf-gcc
-LD = /usr/local/bin/i386-elf-ld
-GDB = /usr/local/bin/i386-elf-gdb
+CC = i686-elf-gcc
+LD = i686-elf-ld
+GDB = i686-elf-gdb
 
 # -g: Use debugging symbols in gcc
 CFLAGS = -g -std=gnu18 -ffreestanding -Wall -Wextra -Wno-unused-parameter -Wno-discarded-qualifiers -Wno-comment -Wno-multichar -Wno-sequence-point -Wno-switch -Wno-unused-function -Wno-unused-value -Wno-sign-compare -I$(ROOTDIR)/kernel -I$(ROOTDIR)/libraries

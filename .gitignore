@@ -17,3 +17,4 @@ src/apps/host/host
 src/apps/calculator/calculator
 src/isodir
 src/logs
+!src/hdd.img

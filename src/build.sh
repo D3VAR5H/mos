@@ -12,7 +12,7 @@ fi
 
 cd kernel && make clean && make && cp kernel.bin ../mos.bin && cd ../
 
-if i386-elf-grub-file --is-x86-multiboot mos.bin; then
+if grub-file --is-x86-multiboot mos.bin; then
   echo multiboot confirmed
 else
   echo the file is not multiboot
@@ -23,7 +23,7 @@ then
   mkdir -p isodir/boot/grub
   cp mos.bin isodir/boot/mos.bin && rm mos.bin
   cp grub.cfg isodir/boot/grub/grub.cfg
-  i386-elf-grub-mkrescue -o mos.iso isodir
+  grub-mkrescue -o mos.iso isodir
 else
   # https://wiki.osdev.org/GRUB#HDD_Image_Instructions_for_OS_X_users
   dd if=/dev/zero of=mos.img count=163840 bs=512
@@ -66,9 +66,8 @@ then
 else
   if [ "$2" == "iso" ]
   then
-    sudo qemu-system-i386 -s -S -boot c -cdrom mos.iso -hda hdd.img \
-      -netdev tap,id=mnet0,ifname=tap0,script=./tapup.sh,downscript=./tapdown.sh -device rtl8139,netdev=mnet0,mac=52:55:00:d1:55:01 \
-      -serial stdio -serial file:logs/uart2.log -serial file:logs/uart3.log -serial file:logs/uart4.log \
+    qemu-system-i386 -s -S -boot c -cdrom mos.iso -hda hdd.img \
+      -serial stdio \
       -rtc driftfix=slew
   else
     qemu-system-i386 -s -drive format=raw,file=mos.img,index=0,media=disk -d guest_errors,int
